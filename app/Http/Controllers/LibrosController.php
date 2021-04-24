@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\libro;
 use Illuminate\Http\Request;
 
 class LibrosController extends Controller
@@ -13,7 +14,8 @@ class LibrosController extends Controller
      */
     public function index()
     {
-        return view('libros.index');
+        $libros = libro::all();
+        return view('libros.index', compact('libros'));
     }
 
     /**
@@ -34,7 +36,21 @@ class LibrosController extends Controller
      */
     public function store(Request $request)
     {
-        return $request->all();
+        $validatedData = $request->validate([
+            'nombrelibro' => 'required|max:100',
+            'autorlibro' => 'required|max:100',
+            'categorialibro' => 'required|max:100',
+            'cantidadlibro' => 'required|max: 10'
+        ]);
+
+        $libro = New libro();
+        $libro->nombrelibro = $request->input('nombrelibro');
+        $libro->autorlibro = $request->input('autorlibro');
+        $libro->categorialibro = $request->input('categorialibro');
+        $libro->cantidadlibro = $request->input('cantidadlibro');
+        $libro->slug = $request->input('nombrelibro');
+        $libro->save();
+        return 'Saved';
         // return $request->input('nombrelibro');
     }
 
@@ -44,9 +60,9 @@ class LibrosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(libro $libro)
     {
-        //
+        return view('libros.show', compact('libro'));
     }
 
     /**
@@ -55,9 +71,9 @@ class LibrosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(libro $libro)
     {
-        //
+        return view('libros.edit', compact('libro'));
     }
 
     /**
@@ -67,9 +83,11 @@ class LibrosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, libro $libro)
     {
-        //
+        $libro->fill($request->all());
+        $libro->save();
+        // return view('libros.index', compact('libro'));
     }
 
     /**
