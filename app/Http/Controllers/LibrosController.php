@@ -57,6 +57,7 @@ class LibrosController extends Controller
     {
         // return view('libros.show', compact('libro'));
         
+        
     }
 
     /**

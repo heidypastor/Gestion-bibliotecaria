@@ -17,9 +17,11 @@ Route::get('/', function () {
     return view('auth/login');
 });
 
-Route::resource('libros', 'LibrosController');
-
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'LibrosController@index')->name('home');
+
+
+Route::resource('libros', 'LibrosController');
+Route::resource('reservaciones', 'ReservacionesController');
