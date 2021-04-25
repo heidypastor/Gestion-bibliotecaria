@@ -11,6 +11,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -50,8 +51,14 @@
                             @endif
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a {{-- id="navbarDropdown" --}} class="nav-link dropdown-item" href="#" role="button" {{-- data-toggle="dropdown" --}} a{{-- ria-haspopup="true" aria-expanded="false" v-pre --}}>
                                     {{ Auth::user()->name }} <span class="caret"></span>
+                                </a>
+
+                                <a class="dropdown-item text-align-left" href="{{ route('logout') }}"
+                                   onclick="event.preventDefault();
+                                                 document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -73,6 +80,32 @@
         </nav>
 
         <main class="py-4">
+            @auth
+                @if(auth::user()->tipoUsuario == 0)
+                  <div class="nav">
+                      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                        <div class="container-fluid">
+                          <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav">
+                              <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="{{ route('libros.index') }}">Libros</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" href="{{ route('reservaciones.index') }}">Reservaciones</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" href="{{ route('tarifas.index') }}">Tarifas</a>
+                              </li>
+                              {{-- <li class="nav-item">
+                                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> --}}
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </nav>
+                  </div>
+                @endif
+            @endauth
             @yield('content')
         </main>
     </div>

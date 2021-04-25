@@ -42,7 +42,7 @@ class ReservacionesController extends Controller
         $reservacion->fechaDevoReservación = $request->input('fechaDevoReservación');
         $reservacion->save();
 
-        return redirect()->route('reservaciones.index')->with('status', 'Reservación programada correctamente');
+        return redirect()->route('libros.index')->with('status', 'Reservación programada correctamente');
     }
 
     /**

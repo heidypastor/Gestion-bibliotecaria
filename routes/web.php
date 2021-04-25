@@ -25,3 +25,4 @@ Route::get('/home', 'LibrosController@index')->name('home');
 
 Route::resource('libros', 'LibrosController');
 Route::resource('reservaciones', 'ReservacionesController');
+Route::resource('tarifas', 'TarifasController');

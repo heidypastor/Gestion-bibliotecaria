@@ -23,6 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $libros = libro::all();
+        return view('home', compact('libros'));
     }
 }

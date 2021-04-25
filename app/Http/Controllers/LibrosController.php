@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\libro;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreLibroRequest;
 
@@ -15,8 +16,10 @@ class LibrosController extends Controller
      */
     public function index()
     {
+        // $user = user::all();
+        // return $user;
         $libros = libro::all();
-        return view('libros.index', compact('libros'));
+        return view('libros.index', compact('libros', 'users'));
     }
 
     /**
