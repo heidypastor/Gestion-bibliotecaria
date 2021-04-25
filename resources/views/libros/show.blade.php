@@ -11,4 +11,6 @@
 	<p>{{$libro->cantidadlibro}}</p>
 
 
+
+
 @endsection

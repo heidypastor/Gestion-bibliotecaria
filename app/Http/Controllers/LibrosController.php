@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\libro;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreLibroRequest;
 
 class LibrosController extends Controller
 {
@@ -34,15 +35,8 @@ class LibrosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreLibroRequest $request)
     {
-        $validatedData = $request->validate([
-            'nombrelibro' => 'required|max:100',
-            'autorlibro' => 'required|max:100',
-            'categorialibro' => 'required|max:100',
-            'cantidadlibro' => 'required|max: 10'
-        ]);
-
         $libro = New libro();
         $libro->nombrelibro = $request->input('nombrelibro');
         $libro->autorlibro = $request->input('autorlibro');
@@ -50,8 +44,7 @@ class LibrosController extends Controller
         $libro->cantidadlibro = $request->input('cantidadlibro');
         $libro->slug = $request->input('nombrelibro');
         $libro->save();
-        return 'Saved';
-        // return $request->input('nombrelibro');
+        return redirect()->route('libros.index')->with('status', 'Libro agregado correctamente');
     }
 
     /**
@@ -62,7 +55,8 @@ class LibrosController extends Controller
      */
     public function show(libro $libro)
     {
-        return view('libros.show', compact('libro'));
+        // return view('libros.show', compact('libro'));
+        
     }
 
     /**
@@ -88,6 +82,7 @@ class LibrosController extends Controller
         $libro->fill($request->all());
         $libro->save();
         // return view('libros.index', compact('libro'));
+        return redirect()->route('libros.index')->with('status', 'Libro actualizado correctamente');
     }
 
     /**
@@ -96,8 +91,9 @@ class LibrosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(libro $libro)
     {
-        //
+        $libro->delete();
+        return redirect()->route('libros.index')->with('status', 'Libro eliminado correctamente');
     }
 }
