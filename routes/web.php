@@ -14,5 +14,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth/login');
 });
+
+
+Auth::routes();
+
+Route::get('/home', 'LibrosController@index')->name('home');
+
+
+Route::resource('libros', 'LibrosController');
+Route::resource('reservaciones', 'ReservacionesController');
+Route::resource('tarifas', 'TarifasController');
