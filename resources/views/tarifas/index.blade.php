@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Libros Disponibles')
+@section('title', 'Tarifas')
 
 @section('content')
 
@@ -11,6 +11,11 @@
 @endif
 
 <div class="card-body">
+  @if(auth::user()->tipoUsuario == 0)
+  <div class="text-right">
+    <a href="{{ route('tarifas.create') }}" class="btn btn-primary">Nueva</a>
+  </div>
+  @endif
   <div class="table-responsive table-upgrade">
     <table class="table">
       <thead>

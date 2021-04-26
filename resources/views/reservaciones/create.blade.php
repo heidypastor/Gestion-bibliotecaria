@@ -20,6 +20,14 @@
 			<label for="">Fecha devolución</label>	
 			<input type="date" name="fechaDevoReservación" class="form-control">	
 		</div>
+		<div class="form-group">
+			<label for="">Seleccione los libros a reservar</label>	
+			<select multiple  class="form-control selectmultiple" name="libros[]" placeholder="seleccione">
+				@foreach($libros as $libro)
+					<option value="{{$libro->id}}">{{$libro->nombrelibro}}</option>
+				@endforeach
+			</select>
+		</div>
 
 		<br>
 		<button type="submit" class="btn btn-primary">Guardar</button>

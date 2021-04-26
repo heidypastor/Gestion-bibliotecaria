@@ -35,6 +35,15 @@
 			<label for="">Cantidad de libros</label>	
 			<input type="number" name="cantidadlibro" class="form-control">	
 		</div>
+
+		<div class="form-group">
+			<label for="">Seleccione la tarifa correspondiente</label>	
+			<select  class="form-control selectmultiple" name="tarifas[]" placeholder="seleccione">
+				@foreach($tarifas as $tarifa)
+					<option value="{{$tarifa->id}}">{{$tarifa->valorTarifa}}</option>
+				@endforeach
+			</select>
+		</div>
 		<br>
 		<button type="submit" class="btn btn-primary">Guardar</button>
 	</form>

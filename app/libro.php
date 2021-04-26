@@ -18,4 +18,17 @@ class libro extends Model
 	{
 	    return 'slug';
 	}
+
+
+	public function reservacions()
+    {
+        return $this->belongsToMany('App\reservacion','libros_reservacions');
+        //Relación de la tabla libros y la tabla reservaciones
+    }
+
+    public function tarifas()
+    {
+        return $this->belongsToMany('App\tarifa','libros_tarifas');
+        //Relación de la tabla libros y la tabla reservaciones
+    }
 }

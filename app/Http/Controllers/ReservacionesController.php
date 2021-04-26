@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\reservacion;
+use App\libro;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreReservacionRequest;
 
@@ -27,7 +28,8 @@ class ReservacionesController extends Controller
      */
     public function create()
     {
-        return view('reservaciones.create');
+        $libros = libro::all();
+        return view('reservaciones.create', compact('libros'));
     }
 
     /**
@@ -38,9 +40,15 @@ class ReservacionesController extends Controller
      */
     public function store(StoreReservacionRequest $request)
     {
+        $libros = libro::all();
+        // return $request;
         $reservacion = New reservacion();
         $reservacion->fechaDevoReservación = $request->input('fechaDevoReservación');
         $reservacion->save();
+
+        // $libros->reservacion()->sync($request->get('reservacion'));
+
+        $reservacion->libros()->attach($request->input('libros'));
 
         return redirect()->route('libros.index')->with('status', 'Reservación programada correctamente');
     }
@@ -56,6 +64,7 @@ class ReservacionesController extends Controller
         // return view('reservaciones.show', compact('reservacion'));
         // return $reservacion;
         $reservacion = reservacion::find($id);
+        $reservacion['libros'] = $reservacion->libros()->get();
         return view('reservaciones.show', compact('reservacion'));
     }
 

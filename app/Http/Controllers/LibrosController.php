@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\libro;
-use App\User;
+use App\tarifa;
+use App\reservacion;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreLibroRequest;
 
@@ -16,10 +17,9 @@ class LibrosController extends Controller
      */
     public function index()
     {
-        // $user = user::all();
-        // return $user;
+        $tarifas = tarifa::all();
         $libros = libro::all();
-        return view('libros.index', compact('libros', 'users'));
+        return view('libros.index', compact('libros', 'tarifas'));
     }
 
     /**
@@ -29,7 +29,8 @@ class LibrosController extends Controller
      */
     public function create()
     {
-        return view('libros.create');
+        $tarifas = tarifa::all();
+        return view('libros.create', compact('tarifas'));
     }
 
     /**
@@ -47,6 +48,9 @@ class LibrosController extends Controller
         $libro->cantidadlibro = $request->input('cantidadlibro');
         $libro->slug = $request->input('nombrelibro');
         $libro->save();
+
+        $libro->tarifas()->attach($request->input('tarifas'));
+
         return redirect()->route('libros.index')->with('status', 'Libro agregado correctamente');
     }
 

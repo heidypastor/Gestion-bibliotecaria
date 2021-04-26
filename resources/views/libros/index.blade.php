@@ -11,6 +11,11 @@
 @endif
 
 <div class="card-body">
+  @if(auth::user()->tipoUsuario == 0)
+  <div class="text-right">
+    <a href="{{ route('libros.create') }}" class="btn btn-primary">Nuevo</a>
+  </div>
+  @endif
   <div class="table-responsive table-upgrade">
     <table class="table">
       <thead>
@@ -20,6 +25,7 @@
         <th class="text-center">Cantidad</th>
         {{-- <th class="text-center">Ver más..</th> --}}
         @if(auth::user()->tipoUsuario == 0)
+        <th class="text-center">Tarifa</th>
         <th class="text-center">Editar</th>
         <th class="text-center">Eliminar</th>
         @else
@@ -35,6 +41,13 @@
             <td class="text-center">{{$libro->cantidadlibro}}</td>
             {{-- <td class="text-center"><a href="/libros/{{$libro->slug}}" class="btn btn-primary">Ver más..</td> --}}
             @if(auth::user()->tipoUsuario == 0)
+            <td class="text-center">
+              @foreach($libro->tarifas as $tarifa)
+                <ul>
+                  <li>{{$tarifa->valorTarifa}}</li>
+                </ul>
+              @endforeach
+            </td>
             <td class="text-center"><a href="/libros/{{$libro->slug}}/edit" class="btn btn-primary">Editar</td>
             <td class="text-center">
                 <form action="{{ route('libros.destroy', $libro) }}" method="POST">
